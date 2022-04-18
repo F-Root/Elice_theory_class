@@ -1,61 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>WEB - Welcome</title>
-    <meta charset="utf-8" />
-    <script
-      src="https://code.jquery.com/jquery-3.6.0.min.js"
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="style.css" />
-    <!-- <script src="daynight.js"></script> -->
-    <script type="module">
-      import { dayNight, day } from "./daynight.js";
-      //   console.log(dayNight, day);
-      function listener(event) {
-        if (event.target.value === "night") {
-          dayNight("night");
-          event.target.value = "day";
-        } else {
-          dayNight("day");
-          event.target.value = "night";
-        }
-      }
-      document
-        .querySelector("#dayNightBtn")
-        .addEventListener("click", listener);
+    <script>
+      let topics = [
+        { id: 1, title: "html", body: "html is ..." },
+        { id: 2, title: "css", body: "css is ..." },
+        { id: 3, title: "javascript", body: "javascript is ..." },
+      ];
     </script>
   </head>
   <body>
-    <input
-      type="button"
-      id="dayNightBtn"
-      value="night"
-      onclick="
-            // // 만약에 이 버튼의 value 값이 night라면 아래 코드가 실행되고, 
-            // if(this.value === 'night'){
-            //     dayNight('night');
-            //     this.value = 'day';
-            // } else {
-            //     // 아니라면 아래 코드가 실행된다. 
-            //     dayNight('day');
-            //     this.value = 'night';
-            // }
-        "
-    />
     <h1><a href="index.html">WEB</a></h1>
-
-    <div id="container">
+    <nav>
       <ol>
-        <li><a href="1.html">html</a></li>
+        <!-- <li><a href="1.html">html</a></li>
         <li><a href="2.html">css</a></li>
-        <li><a href="3.html">javascript</a></li>
+        <li><a href="3.html">javascript</a></li> -->
       </ol>
-      <div>
-        <h2>Welcome</h2>
-        Hello, WEB!!!!!
-      </div>
-    </div>
+    </nav>
+    <h2>Welcome</h2>
+    Hello, WEB
+    <script>
+      function nav() {
+        let navTag = "";
+        for (let i = 0; i < topics.length; i++) {
+          navTag =
+            navTag +
+            `<li><a href="${topics[i].id}">${topics[i].title}</a></li>`;
+        }
+        document.querySelector("nav ol").innerHTML = navTag;
+        console.log(navTag);
+      }
+      nav();
+    </script>
   </body>
 </html>
