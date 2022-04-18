@@ -1,0 +1,20 @@
+h1 {
+  border-bottom: 10px solid green;
+  padding: 30px;
+  margin-bottom: 0;
+}
+h1 a {
+  text-decoration: none;
+}
+ol {
+  margin-top: 0;
+}
+@media all and (min-width: 480px) {
+  #container {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+  }
+  ol {
+    border-right: 10px solid pink;
+  }
+}

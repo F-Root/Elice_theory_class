@@ -8,72 +8,41 @@
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
     ></script>
-    <style>
-      h1 {
-        border-bottom: 10px solid green;
-        padding: 30px;
-        margin-bottom: 0;
-      }
-      h1 a {
-        text-decoration: none;
-      }
-      ol {
-        margin-top: 0;
-      }
-      @media all and (min-width: 480px) {
-        #container {
-          display: grid;
-          grid-template-columns: 150px 1fr;
-        }
-        ol {
-          border-right: 10px solid pink;
-        }
-      }
-    </style>
-    <script>
-      function night() {
-        // document.querySelector("body").style.backgroundColor = "black";
-        $('body').css('background-color', 'black');
-        // document.querySelector("body").style.color = "white";
-        $('body').css('color', 'white');
-        // let as = document.querySelectorAll("a");
-        // for (let i = 0; i < as.length; i = i + 1) {
-        //   as[i].style.color = "white";
-        // }
-        $('a').css('color', 'white');
-      }
-      function day() {
-        document.querySelector("body").style.backgroundColor = "white";
-        document.querySelector("body").style.color = "black";
-        let as = document.querySelectorAll("a");
-        for (let i = 0; i < as.length; i = i + 1) {
-          as[i].style.color = "black";
-        }
-      }
-      function dayNight(mode) {
-        if (mode === "night") {
-          night();
+    <link rel="stylesheet" href="style.css" />
+    <!-- <script src="daynight.js"></script> -->
+    <script type="module">
+      import { dayNight, day } from "./daynight.js";
+      //   console.log(dayNight, day);
+      function listener(event) {
+        if (event.target.value === "night") {
+          dayNight("night");
+          event.target.value = "day";
         } else {
-          day();
+          dayNight("day");
+          event.target.value = "night";
         }
       }
+      document
+        .querySelector("#dayNightBtn")
+        .addEventListener("click", listener);
     </script>
   </head>
   <body>
     <input
       type="button"
+      id="dayNightBtn"
       value="night"
       onclick="
-                // 만약에 이 버튼의 value 값이 night라면 아래 코드가 실행되고, 
-                if(this.value === 'night'){
-                    dayNight('night');
-                    this.value = 'day';
-                } else {
-                    // 아니라면 아래 코드가 실행된다. 
-                    dayNight('day');
-                    this.value = 'night';
-                }
-            "
+            // // 만약에 이 버튼의 value 값이 night라면 아래 코드가 실행되고, 
+            // if(this.value === 'night'){
+            //     dayNight('night');
+            //     this.value = 'day';
+            // } else {
+            //     // 아니라면 아래 코드가 실행된다. 
+            //     dayNight('day');
+            //     this.value = 'night';
+            // }
+        "
     />
     <h1><a href="index.html">WEB</a></h1>
 
