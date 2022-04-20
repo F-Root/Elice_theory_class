@@ -1,0 +1,69 @@
+<html>
+  <body>
+    <header>
+      <h1><a href="/">WEB</a></h1>
+    </header>
+    <nav>
+      <ol>
+        <!-- 
+        <li><a href="/read/1">html</a></li>
+        <li><a href="/read/2">css</a></li>
+        -->
+      </ol>
+    </nav>
+    <article>
+      <!--
+        <h2>Welcome</h2>
+        Hello, web
+      -->
+    </article>
+    <ol id="control">
+      <!--
+        <li><a href="/create">Create</a></li>
+        <li><a href="/update">Update</a></li>
+        <li><a href="/delete">Delete</a></li>
+      -->
+    </ol>
+    <script>
+      const topics = [
+        { id: 1, title: "html", body: "html is ..." },
+        { id: 2, title: "css", body: "css is ..." },
+        { id: 3, title: "javascript", body: "javascript is ..." },
+      ];
+      let selectedId = null;
+      function navHandler(e, t) {
+        //e는 event / t 는 this(tag가 나온다)
+        console.log(e, t);
+        //1.링크가 작동하지 않아야 한다.
+        e.preventDefault();
+        //2.아이디 값을 알아낸다.
+        selectedId = Number(e.target.id);
+        read();
+      }
+      function nav() {
+        const tag = topics
+          .map(
+            (e) =>
+              `<li><a href="/read/${e.id}" id="${e.id}" onclick="navHandler(event, this);">${e.title}</a></li>`
+          )
+          .join("");
+        document.querySelector("nav>ol").innerHTML = tag;
+      }
+      function welcome() {}
+      function read() {
+        //3.아이디와 일치하는 topics의 원소를 찾는다.
+        const topic = topics.filter((e) => e.id === selectedId)[0];
+        console.log(topic);
+        //4.본문을 만든다.
+        const content = `<h2>${topic.title}</h2>${topic.body}`;
+        //5.본문을 출력한다.
+        document.querySelector("article").innerHTML = content;
+      }
+      function create() {}
+      function update() {}
+      function del() {}
+      function control() {}
+      nav();
+    </script>
+  </body>
+</html>
