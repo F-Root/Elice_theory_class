@@ -68,6 +68,7 @@
             document.querySelector("nav>ol").innerHTML = tag;
           })
         );
+        document.querySelector("nav>ol").innerHTML = "Loading...";
       }
       function welcome() {
         document.querySelector(
@@ -77,13 +78,17 @@
         control();
       }
       function read() {
-        //3.아이디와 일치하는 topics의 원소를 찾는다.
-        const topic = topics.filter((e) => e.id === selectedId)[0];
-        //4.본문을 만든다.
-        const content = `<h2>${topic.title}</h2>${topic.body}`;
-        //5.본문을 출력한다.
-        document.querySelector("article").innerHTML = content;
-        control();
+        fetch("http://localhost:3000/topics/" + selectedId)
+          .then((response) => response.json())
+          .then((topic) => {
+            //3.아이디와 일치하는 topics의 원소를 찾는다.
+            // const topic = topics.filter((e) => e.id === selectedId)[0];
+            //4.본문을 만든다.
+            const content = `<h2>${topic.title}</h2>${topic.body}`;
+            //5.본문을 출력한다.
+            document.querySelector("article").innerHTML = content;
+            control();
+          });
       }
       function createHandler(e) {
         e.preventDefault();
