@@ -94,16 +94,27 @@
         e.preventDefault();
         const t = e.target.title.value;
         const b = e.target.body.value;
-        const newTopic = { id: nextId, title: t, body: b };
-        topics.push(newTopic);
-        nav();
-        selectedId = nextId;
-        nextId += 1;
-        read();
+        fetch("http://localhost:3000/topics", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ title: t, body: b }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // const newTopic = { id: nextId, title: t, body: b };
+            // topics.push(newTopic);
+            nav();
+            // selectedId = nextId;
+            // nextId += 1;
+            selectedId = data.id;
+            read();
+          });
       }
       function create() {
         const content = `
-            <form onsubmit="createHandler(event);">         
+            <form onsubmit="createHandler(event);">
               <p><input type="text" name="title" placeholder="제목"></p>
               <p><textarea name="body" placeholder="본문"></textarea></p>
               <p><input type="submit" value="create"></p>
@@ -111,14 +122,56 @@
           `;
         document.querySelector("article").innerHTML = content;
       }
-      function update() {}
-      function del() {}
+      function updateHandler(e) {
+        e.preventDefault();
+        const t = e.target.title.value;
+        const b = e.target.body.value;
+        fetch("http://localhost:3000/topics/" + selectedId, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ title: t, body: b }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            nav();
+            selectedId = data.id;
+            read();
+          });
+      }
+      function update() {
+        fetch("http://localhost:3000/topics/" + selectedId)
+          .then((response) => response.json())
+          .then((topic) => {
+            // Create
+            const content = `
+            <form onsubmit="updateHandler(event);">
+              <p><input type="text" name="title" placeholder="제목" value="${topic.title}"></p>
+              <p><textarea name="body" placeholder="본문">${topic.body}</textarea></p>
+              <p><input type="submit" value="update"></p>
+            </form>
+          `;
+            document.querySelector("article").innerHTML = content;
+            control();
+          });
+      }
+      function del() {
+        fetch("http://localhost:3000/topics/" + selectedId, {
+          method: "DELETE",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            nav();
+            welcome();
+          });
+      }
       function control() {
         let contextUI = "";
         if (selectedId !== null) {
           contextUI = `
-            <li><a href="/update">Update</a></li>
-            <li><a href="/delete">Delete</a></li>
+            <li><a href="/update" onclick="event.preventDefault();update();">Update</a></li>
+            <li><a href="/delete" onclick="event.preventDefault();del();">Delete</a></li>
           `;
         }
         document.querySelector("#control").innerHTML = `
